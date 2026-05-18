@@ -1,0 +1,41 @@
+# dependencies
+node_modules/
+
+# expo
+.expo/
+.expo-shared/
+
+# cache
+.cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# builds
+dist/
+build/
+
+# web
+web-build/
+
+# metro
+.metro-health-check*
+
+# native
+*.jks
+*.p8
+*.p12
+*.key
+
+# mac
+.DS_Store
+
+# windows
+Thumbs.db
+
+# environment
+.env
+
+# typescript
+*.tsbuildinfo
+```

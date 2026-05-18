@@ -1,0 +1,218 @@
+[
+  {
+    "id": 1,
+    "name": "Montura Aurora Carey",
+    "price": 129000,
+    "stock": 18,
+    "categoryId": 1,
+    "description": "Montura redonda en acetato carey, ligera y comoda para lentes formulados de uso diario.",
+    "image": "/assets/optica/montura-aurora.png"
+  },
+  {
+    "id": 2,
+    "name": "Montura Milano Titanio",
+    "price": 189000,
+    "stock": 10,
+    "categoryId": 1,
+    "description": "Armazon rectangular de titanio flexible con plaquetas ajustables y acabado sobrio.",
+    "image": "/assets/optica/montura-milano.png"
+  },
+  {
+    "id": 3,
+    "name": "Montura Siena Transparente",
+    "price": 139000,
+    "stock": 16,
+    "categoryId": 1,
+    "description": "Armazon transparente de acetato liviano, ideal para rostros pequenos y medianos.",
+    "image": "/assets/optica/montura-siena.png"
+  },
+  {
+    "id": 4,
+    "name": "Montura Roma Ejecutiva",
+    "price": 175000,
+    "stock": 9,
+    "categoryId": 1,
+    "description": "Montura semi al aire con acabado negro mate para oficina, lectura y uso profesional.",
+    "image": "/assets/optica/montura-roma.png"
+  },
+  {
+    "id": 5,
+    "name": "Gafas de Sol Costa UV400",
+    "price": 159000,
+    "stock": 15,
+    "categoryId": 2,
+    "description": "Lentes polarizados con filtro UV400, ideales para manejo y actividades al aire libre.",
+    "image": "/assets/optica/sol-costa.png"
+  },
+  {
+    "id": 6,
+    "name": "Gafas de Sol Nube Azul",
+    "price": 145000,
+    "stock": 12,
+    "categoryId": 2,
+    "description": "Gafas de sol con lente degradado azul, montura liviana y proteccion para dias soleados.",
+    "image": "/assets/optica/sol-nube.png"
+  },
+  {
+    "id": 7,
+    "name": "Gafas Sol Arena Polarizadas",
+    "price": 169000,
+    "stock": 14,
+    "categoryId": 2,
+    "description": "Diseno cuadrado con lente cafe polarizado para reducir reflejos en carretera y playa.",
+    "image": "/assets/optica/sol-arena.png"
+  },
+  {
+    "id": 8,
+    "name": "Gafas Sol Sport Flex",
+    "price": 155000,
+    "stock": 17,
+    "categoryId": 2,
+    "description": "Gafas deportivas envolventes con agarre nasal y lente gris para entrenamiento exterior.",
+    "image": "/assets/optica/sol-sport.png"
+  },
+  {
+    "id": 9,
+    "name": "Lentes de Contacto Comfort 30",
+    "price": 99000,
+    "stock": 30,
+    "categoryId": 3,
+    "description": "Caja mensual de lentes blandos transparentes con alta hidratacion para uso prolongado.",
+    "image": "/assets/optica/contacto-comfort.png"
+  },
+  {
+    "id": 10,
+    "name": "Lentes Cosmeticos Miel",
+    "price": 119000,
+    "stock": 20,
+    "categoryId": 3,
+    "description": "Lentes cosmeticos color miel con borde natural y acabado suave para cambios sutiles.",
+    "image": "/assets/optica/contacto-miel.png"
+  },
+  {
+    "id": 11,
+    "name": "Lentes Cosmeticos Gris Perla",
+    "price": 119000,
+    "stock": 18,
+    "categoryId": 3,
+    "description": "Lentes cosmeticos gris perla con apariencia natural y reemplazo mensual.",
+    "image": "/assets/optica/contacto-gris.png"
+  },
+  {
+    "id": 12,
+    "name": "Solucion Multiproposito 360 ml",
+    "price": 52000,
+    "stock": 28,
+    "categoryId": 3,
+    "description": "Liquido para limpiar, enjuagar y conservar lentes de contacto blandos.",
+    "image": "/assets/optica/solucion-contacto.png"
+  },
+  {
+    "id": 13,
+    "name": "Kit Cuidado Optico",
+    "price": 45000,
+    "stock": 35,
+    "categoryId": 4,
+    "description": "Incluye estuche rigido, pano de microfibra y spray limpiador para lentes.",
+    "image": "/assets/optica/kit-cuidado.png"
+  },
+  {
+    "id": 14,
+    "name": "Estuche Rigido Prisma",
+    "price": 28000,
+    "stock": 40,
+    "categoryId": 4,
+    "description": "Estuche compacto con interior suave para proteger monturas y lentes de sol.",
+    "image": "/assets/optica/estuche-prisma.png"
+  },
+  {
+    "id": 15,
+    "name": "Pano Microfibra Antiraya",
+    "price": 12000,
+    "stock": 80,
+    "categoryId": 4,
+    "description": "Pano suave para limpiar lentes sin rayar el cristal ni dejar pelusa.",
+    "image": "/assets/optica/pano-microfibra.png"
+  },
+  {
+    "id": 16,
+    "name": "Spray Limpialentes 60 ml",
+    "price": 18000,
+    "stock": 55,
+    "categoryId": 4,
+    "description": "Spray limpiador para retirar grasa, polvo y marcas de las lunas.",
+    "image": "/assets/optica/spray-limpialentes.png"
+  },
+  {
+    "id": 17,
+    "name": "Cristal Monofocal Antirreflejo",
+    "price": 95000,
+    "stock": 24,
+    "categoryId": 5,
+    "description": "Par de cristales monofocales con tratamiento antirreflejo para formula sencilla.",
+    "image": "/assets/optica/cristal-monofocal.png"
+  },
+  {
+    "id": 18,
+    "name": "Cristal Blue Filter",
+    "price": 135000,
+    "stock": 22,
+    "categoryId": 5,
+    "description": "Cristales con filtro de luz azul para jornadas frente a pantallas.",
+    "image": "/assets/optica/cristal-blue.png"
+  },
+  {
+    "id": 19,
+    "name": "Cristal Progresivo Premium",
+    "price": 390000,
+    "stock": 8,
+    "categoryId": 5,
+    "description": "Par de lentes progresivos para vision cercana, intermedia y lejana en un solo cristal.",
+    "image": "/assets/optica/cristal-progresivo.png"
+  },
+  {
+    "id": 20,
+    "name": "Cristal Fotocromatico",
+    "price": 245000,
+    "stock": 11,
+    "categoryId": 5,
+    "description": "Cristales que se oscurecen con la luz solar y vuelven a claro en interiores.",
+    "image": "/assets/optica/cristal-fotocromatico.png"
+  },
+  {
+    "id": 21,
+    "name": "Montura Kids Flex Azul",
+    "price": 98000,
+    "stock": 20,
+    "categoryId": 6,
+    "description": "Montura infantil flexible en silicona azul, resistente para uso escolar.",
+    "image": "/assets/optica/kids-flex-azul.png"
+  },
+  {
+    "id": 22,
+    "name": "Montura Kids Rosa Ligera",
+    "price": 98000,
+    "stock": 19,
+    "categoryId": 6,
+    "description": "Armazon infantil liviano con puente comodo y varillas suaves.",
+    "image": "/assets/optica/kids-rosa.png"
+  },
+  {
+    "id": 23,
+    "name": "Gafas Sol Kids UV",
+    "price": 76000,
+    "stock": 25,
+    "categoryId": 6,
+    "description": "Gafas solares para ninos con proteccion UV y montura resistente.",
+    "image": "/assets/optica/kids-sol.png"
+  },
+  {
+    "id": 24,
+    "name": "Cordones Deportivos Kids",
+    "price": 15000,
+    "stock": 60,
+    "categoryId": 6,
+    "description": "Cordones ajustables para asegurar las gafas durante juego, colegio o deporte.",
+    "image": "/assets/optica/kids-cordon.png"
+  }
+]

@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "id": 1,
+    "name": "Monturas oftalmicas",
+    "description": "Armazones para lentes formulados de uso diario, oficina y estudio."
+  },
+  {
+    "id": 2,
+    "name": "Lentes de sol",
+    "description": "Gafas con proteccion UV, opciones polarizadas y estilos para exterior."
+  },
+  {
+    "id": 3,
+    "name": "Lentes de contacto",
+    "description": "Lentes blandos transparentes, cosmeticos y opciones de reemplazo mensual."
+  },
+  {
+    "id": 4,
+    "name": "Cuidado y accesorios",
+    "description": "Estuches, panos, liquidos y kits para proteger tus lentes."
+  },
+  {
+    "id": 5,
+    "name": "Lentes formulados",
+    "description": "Cristales monofocales, blue filter y progresivos para montar en armazon."
+  },
+  {
+    "id": 6,
+    "name": "Linea infantil",
+    "description": "Monturas resistentes y comodas para ninos y adolescentes."
+  }
+]

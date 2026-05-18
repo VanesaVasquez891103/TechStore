@@ -1,0 +1,8 @@
+{
+  "expo": {
+    "name": "TechStore Mobile",
+    "slug": "techstore-mobile",
+    "version": "1.0.0",
+    "platforms": ["ios", "android", "web"]
+  }
+}

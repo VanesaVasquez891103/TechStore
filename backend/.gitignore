@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+mobile/node_modules/
+
+# API build output
+dist/
+build/
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+data/*.db-shm
+data/*.db-wal
+data/*.sqlite-shm
+data/*.sqlite-wal
+
+# Mobile / Expo build output
+mobile/.expo/
+mobile/.expo-shared/
+mobile/dist/
+mobile/build/
+mobile/web-build/
+
+# Native mobile build output
+mobile/android/
+mobile/ios/
+mobile/*.apk
+mobile/*.aab
+mobile/*.ipa
+
+# Logs
+*.log
+mobile/*.log
+
+# Environment files
+.env
+.env.*
+mobile/.env
+mobile/.env.*
