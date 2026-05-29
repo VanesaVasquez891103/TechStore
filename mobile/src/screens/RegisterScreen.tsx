@@ -1,10 +1,12 @@
 ﻿import React, { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
-import { api } from '../services/api';
 import { useAppContext } from '../context/AppContext';
+import { AppButton } from '../components/AppButton';
+import { colors, radii, shadows, sharedStyles, typography } from '../styles/theme';
 
 export function RegisterScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Register'>>();
@@ -15,9 +17,12 @@ export function RegisterScreen() {
   const [error, setError] = useState('');
 
   const handleSubmit = async () => {
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      setError('Todos los campos son obligatorios');
+      return;
+    }
     try {
       await register(name, email, password);
-      navigation.replace('Home');
     } catch (err) {
       setError('No se pudo registrar. Verifica tus datos.');
     }
@@ -25,35 +30,43 @@ export function RegisterScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Registro</Text>
-      {error ? <Text style={styles.error}>{error}</Text> : null}
-      <TextInput
-        placeholder="Nombre"
-        style={styles.input}
-        value={name}
-        onChangeText={setName}
-      />
-      <TextInput
-        placeholder="Correo electrónico"
-        style={styles.input}
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <TextInput
-        placeholder="Contraseña"
-        style={styles.input}
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <Button title="Crear cuenta" onPress={handleSubmit} />
-      <View style={styles.switchContainer}>
-        <Text>¿Ya tienes cuenta?</Text>
-        <Text style={styles.link} onPress={() => navigation.navigate('Login')}>
-          Inicia sesión
-        </Text>
+      <View style={styles.card}>
+        <View style={styles.iconCircle}>
+          <Ionicons name="person-add-outline" size={30} color={colors.primary} />
+        </View>
+        <Text style={styles.title}>Registro</Text>
+        {error ? <Text style={styles.error}>{error}</Text> : null}
+        <TextInput
+          placeholder="Nombre"
+          style={styles.input}
+          value={name}
+          onChangeText={setName}
+          placeholderTextColor={colors.muted}
+        />
+        <TextInput
+          placeholder="Correo electronico"
+          style={styles.input}
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          placeholderTextColor={colors.muted}
+        />
+        <TextInput
+          placeholder="Contrasena"
+          style={styles.input}
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          placeholderTextColor={colors.muted}
+        />
+        <AppButton title="Crear cuenta" icon="person-add-outline" onPress={handleSubmit} />
+        <View style={styles.switchContainer}>
+          <Text style={styles.switchText}>Ya tienes cuenta?</Text>
+          <Text style={styles.link} onPress={() => navigation.navigate('Login')}>
+            Inicia sesion
+          </Text>
+        </View>
       </View>
     </View>
   );
@@ -62,36 +75,54 @@ export function RegisterScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
+    padding: 22,
     justifyContent: 'center',
-    backgroundColor: '#eff3f7',
+    backgroundColor: colors.background,
+  },
+  card: {
+    backgroundColor: colors.surface,
+    borderRadius: radii.xl,
+    padding: 24,
+    ...shadows.card,
+  },
+  iconCircle: {
+    alignItems: 'center',
+    backgroundColor: colors.surfaceSoft,
+    borderRadius: radii.lg,
+    height: 58,
+    justifyContent: 'center',
+    marginBottom: 16,
+    width: 58,
   },
   title: {
-    fontSize: 28,
-    fontWeight: '700',
+    ...typography.title,
+    fontSize: 30,
     marginBottom: 24,
-    color: '#1f6f8b',
+    color: colors.primary,
   },
   input: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 14,
+    ...sharedStyles.input,
     marginBottom: 14,
-    borderWidth: 1,
-    borderColor: '#ddd',
   },
   switchContainer: {
-    marginTop: 16,
+    marginTop: 18,
     flexDirection: 'row',
     justifyContent: 'center',
+    flexWrap: 'wrap',
+  },
+  switchText: {
+    ...typography.body,
+    color: colors.muted,
   },
   link: {
+    ...typography.body,
     marginLeft: 6,
-    color: '#1f6f8b',
-    fontWeight: '700',
+    color: colors.primary,
+    fontWeight: '800',
   },
   error: {
     marginBottom: 12,
-    color: '#d02a2a',
+    color: colors.danger,
+    fontWeight: '700',
   },
 });

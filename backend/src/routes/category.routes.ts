@@ -10,10 +10,10 @@
  *           example: 1
  *         name:
  *           type: string
- *           example: "Electrónica"
+ *           example: "Monturas oftalmicas"
  *         description:
  *           type: string
- *           example: "Productos electrónicos y accesorios"
+ *           example: "Armazones para lentes formulados de uso diario, oficina y estudio."
  *       required:
  *         - id
  *         - name
@@ -23,10 +23,10 @@
  *       properties:
  *         name:
  *           type: string
- *           example: "Ropa"
+ *           example: "Lentes de sol"
  *         description:
  *           type: string
- *           example: "Categoría para vestimenta"
+ *           example: "Gafas con proteccion UV, opciones polarizadas y estilos para exterior."
  *       required:
  *         - name
  *         - description
@@ -56,11 +56,11 @@ const controller = new CategoryController(new CategoryService());
  * @openapi
  * /api/categories:
  *   get:
- *     summary: Obtener todas las categorías
- *     description: Devuelve la lista completa de categorías almacenadas en mock JSON.
+ *     summary: Obtener todas las categorias
+ *     description: Devuelve la lista completa de categorias opticas.
  *     responses:
  *       200:
- *         description: Lista de categorías
+ *         description: Lista de categorias
  *         content:
  *           application/json:
  *             schema:
@@ -74,23 +74,23 @@ router.get('/', controller.getAll.bind(controller));
  * @openapi
  * /api/categories/{id}:
  *   get:
- *     summary: Obtener una categoría por ID
+ *     summary: Obtener una categoria por ID
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: integer
- *         description: ID de la categoría
+ *         description: ID de la categoria
  *     responses:
  *       200:
- *         description: Categoría encontrada
+ *         description: Categoria encontrada
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Category'
  *       404:
- *         description: Categoría no encontrada
+ *         description: Categoria no encontrada
  */
 router.get('/:id', controller.getById.bind(controller));
 
@@ -98,8 +98,8 @@ router.get('/:id', controller.getById.bind(controller));
  * @openapi
  * /api/categories:
  *   post:
- *     summary: Crear una nueva categoría
- *     description: Crea una categoría nueva si no existe otra con el mismo nombre.
+ *     summary: Crear una nueva categoria
+ *     description: Crea una categoria nueva si no existe otra con el mismo nombre.
  *     requestBody:
  *       required: true
  *       content:
@@ -108,7 +108,7 @@ router.get('/:id', controller.getById.bind(controller));
  *             $ref: '#/components/schemas/CreateCategoryDto'
  *     responses:
  *       201:
- *         description: Categoría creada o existente retornada
+ *         description: Categoria creada o existente retornada
  *         content:
  *           application/json:
  *             schema:
@@ -123,14 +123,14 @@ router.post('/', validateBody([
  * @openapi
  * /api/categories/{id}:
  *   put:
- *     summary: Actualizar una categoría existente
+ *     summary: Actualizar una categoria existente
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: integer
- *         description: ID de la categoría a actualizar
+ *         description: ID de la categoria a actualizar
  *     requestBody:
  *       required: true
  *       content:
@@ -139,13 +139,13 @@ router.post('/', validateBody([
  *             $ref: '#/components/schemas/UpdateCategoryDto'
  *     responses:
  *       200:
- *         description: Categoría actualizada
+ *         description: Categoria actualizada
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Category'
  *       404:
- *         description: Categoría no encontrada
+ *         description: Categoria no encontrada
  */
 router.put('/:id', validateBody([
     { field: 'name', type: 'string', required: false },
@@ -156,19 +156,19 @@ router.put('/:id', validateBody([
  * @openapi
  * /api/categories/{id}:
  *   delete:
- *     summary: Eliminar una categoría
+ *     summary: Eliminar una categoria
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: integer
- *         description: ID de la categoría a eliminar
+ *         description: ID de la categoria a eliminar
  *     responses:
  *       204:
- *         description: Categoría eliminada
+ *         description: Categoria eliminada
  *       404:
- *         description: Categoría no encontrada
+ *         description: Categoria no encontrada
  */
 router.delete('/:id', controller.delete.bind(controller));
 

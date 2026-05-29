@@ -9,6 +9,8 @@ const insertOrderStmt = db.prepare('INSERT INTO orders (userId, type, total, sta
 const deleteOrderStmt = db.prepare('DELETE FROM orders WHERE id = ?');
 const deleteOrderItemsByOrderStmt = db.prepare('DELETE FROM order_items WHERE orderId = ?');
 const insertOrderItemStmt = db.prepare('INSERT INTO order_items (orderId, productId, quantity, price) VALUES (?, ?, ?, ?)');
+const getProductStockStmt = db.prepare('SELECT id, name, stock FROM products WHERE id = ?');
+const decrementProductStockStmt = db.prepare('UPDATE products SET stock = stock - ? WHERE id = ?');
 
 function mapOrder(order: any): IOrder {
     const items = db.prepare('SELECT id, productId, quantity, price FROM order_items WHERE orderId = ?').all(order.id) as IOrderItem[];
@@ -37,6 +39,20 @@ export class OrderService {
 
     create(dto: CreateOrderDto): IOrder {
         const insert = db.transaction(() => {
+            for (const item of dto.items) {
+                if (!Number.isInteger(item.quantity) || item.quantity <= 0) {
+                    throw new Error('La cantidad de cada producto debe ser mayor que cero');
+                }
+
+                const product = getProductStockStmt.get(item.productId) as { id: number; name: string; stock: number } | undefined;
+                if (!product) {
+                    throw new Error(`Producto ${item.productId} no encontrado`);
+                }
+                if (product.stock < item.quantity) {
+                    throw new Error(`Stock insuficiente para ${product.name}`);
+                }
+            }
+
             const result = insertOrderStmt.run(
                 dto.userId,
                 dto.type,
@@ -48,6 +64,7 @@ export class OrderService {
             const orderId = Number(result.lastInsertRowid);
             for (const item of dto.items) {
                 insertOrderItemStmt.run(orderId, item.productId, item.quantity, item.price);
+                decrementProductStockStmt.run(item.quantity, item.productId);
             }
             return orderId;
         });

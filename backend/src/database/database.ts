@@ -2,7 +2,8 @@ import Database from 'better-sqlite3';
 import fs from 'fs';
 import path from 'path';
 
-const DATA_DIR = path.join(process.cwd(), 'data');
+const PROJECT_ROOT = path.resolve(__dirname, '..', '..', '..');
+const DATA_DIR = path.join(PROJECT_ROOT, 'data');
 const DB_FILE = path.join(DATA_DIR, 'techstore.db');
 
 if (!fs.existsSync(DATA_DIR)) {

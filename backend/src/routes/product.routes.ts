@@ -10,22 +10,25 @@
  *           example: 1
  *         name:
  *           type: string
- *           example: "Teclado mecánico"
+ *           example: "Montura Aurora Carey"
  *         price:
  *           type: number
- *           example: 79.99
+ *           example: 129000
  *         stock:
  *           type: integer
- *           example: 25
+ *           example: 18
  *         categoryId:
  *           type: integer
- *           example: 2
+ *           example: 1
  *         description:
  *           type: string
- *           example: "Teclado mecánico RGB con switches táctiles."
+ *           example: "Montura redonda en acetato carey, ligera y comoda para lentes formulados de uso diario."
  *         image:
  *           type: string
- *           example: "https://example.com/images/keyboard.png"
+ *           example: "/assets/optica/montura-aurora.png"
+ *         brand:
+ *           type: string
+ *           example: "Optica Clara"
  *       required:
  *         - id
  *         - name
@@ -39,22 +42,25 @@
  *       properties:
  *         name:
  *           type: string
- *           example: "Mouse gaming"
+ *           example: "Gafas de Sol Costa UV400"
  *         price:
  *           type: number
- *           example: 49.99
+ *           example: 159000
  *         stock:
  *           type: integer
- *           example: 50
+ *           example: 15
  *         categoryId:
  *           type: integer
- *           example: 1
+ *           example: 2
  *         description:
  *           type: string
- *           example: "Mouse para juegos con sensor óptico."
+ *           example: "Lentes polarizados con filtro UV400, ideales para manejo y actividades al aire libre."
  *         image:
  *           type: string
- *           example: "https://example.com/images/mouse.png"
+ *           example: "/assets/optica/sol-costa.png"
+ *         brand:
+ *           type: string
+ *           example: "Optica Clara"
  *       required:
  *         - name
  *         - price
@@ -77,9 +83,12 @@
  *           type: string
  *         image:
  *           type: string
+ *         brand:
+ *           type: string
  */
 import { Router } from 'express';
 import { validateBody } from '../middlewares/validation.middleware';
+import { requireAdmin } from '../middlewares/admin.middleware';
 import { ProductController } from '../controller/product.controller';
 import { ProductService } from '../services/product.service';
 
@@ -91,21 +100,21 @@ const controller = new ProductController(new ProductService());
  * /api/products:
  *   get:
  *     summary: Obtener todos los productos
- *     description: Devuelve todos los productos almacenados en mock JSON y permite búsqueda por nombre o categoría.
+ *     description: Devuelve productos de optica y permite busqueda por nombre, descripcion o categoria.
  *     parameters:
  *       - in: query
  *         name: search
  *         schema:
  *           type: string
- *         description: Buscar por nombre o descripción.
+ *         description: Buscar por nombre o descripcion.
  *       - in: query
  *         name: categoryId
  *         schema:
  *           type: integer
- *         description: Filtrar por categoría.
+ *         description: Filtrar por categoria.
  *     responses:
  *       200:
- *         description: Lista de productos
+ *         description: Lista de productos opticos
  *         content:
  *           application/json:
  *             schema:
@@ -143,7 +152,7 @@ router.get('/:id', controller.getById.bind(controller));
  * @openapi
  * /api/products:
  *   post:
- *     summary: Crear un nuevo producto
+ *     summary: Crear un nuevo producto optico
  *     requestBody:
  *       required: true
  *       content:
@@ -158,7 +167,7 @@ router.get('/:id', controller.getById.bind(controller));
  *             schema:
  *               $ref: '#/components/schemas/Product'
  */
-router.post('/', validateBody([
+router.post('/', requireAdmin, validateBody([
     { field: 'name', type: 'string' },
     { field: 'price', type: 'number' },
     { field: 'stock', type: 'number' },
@@ -195,13 +204,14 @@ router.post('/', validateBody([
  *       404:
  *         description: Producto no encontrado
  */
-router.put('/:id', validateBody([
+router.put('/:id', requireAdmin, validateBody([
     { field: 'name', type: 'string', required: false },
     { field: 'price', type: 'number', required: false },
     { field: 'stock', type: 'number', required: false },
     { field: 'categoryId', type: 'number', required: false },
     { field: 'description', type: 'string', required: false },
-    { field: 'image', type: 'string', required: false }
+    { field: 'image', type: 'string', required: false },
+    { field: 'brand', type: 'string', required: false }
 ]), controller.update.bind(controller));
 
 /**
@@ -222,6 +232,6 @@ router.put('/:id', validateBody([
  *       404:
  *         description: Producto no encontrado
  */
-router.delete('/:id', controller.delete.bind(controller));
+router.delete('/:id', requireAdmin, controller.delete.bind(controller));
 
 export default router;

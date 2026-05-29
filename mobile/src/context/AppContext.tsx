@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { api } from '../services/api';
+import { api, CreateProductInput } from '../services/api';
 import { Category, OrderItem, Product, User } from '../types';
 
 interface AppContextValue {
@@ -14,7 +14,10 @@ interface AppContextValue {
   login: (user: User) => Promise<void>;
   logout: () => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
+  createProduct: (product: CreateProductInput) => Promise<Product>;
+  updateProductStock: (productId: number, stock: number) => Promise<Product>;
   addToCart: (product: Product, quantity: number) => void;
+  updateCartQuantity: (productId: number, quantity: number) => void;
   removeFromCart: (productId: number) => void;
   placeOrder: () => Promise<void>;
   setSearch: (value: string) => void;
@@ -50,7 +53,8 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
         ]);
 
         if (storedUser) {
-          setUser(JSON.parse(storedUser));
+          const parsedUser = JSON.parse(storedUser);
+          setUser(parsedUser?.data ?? parsedUser);
         }
         if (storedCart) {
           setCartItems(JSON.parse(storedCart));
@@ -148,6 +152,26 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
     setUser(registeredUser);
   }, []);
 
+  const createProduct = useCallback(async (product: CreateProductInput) => {
+    if (user?.role !== 'admin') {
+      throw new Error('Esta cuenta no tiene permisos para crear productos');
+    }
+
+    const createdProduct = await api.createProduct(product, user.id);
+    await refreshProducts();
+    return createdProduct;
+  }, [refreshProducts, user]);
+
+  const updateProductStock = useCallback(async (productId: number, stock: number) => {
+    if (user?.role !== 'admin') {
+      throw new Error('Esta cuenta no tiene permisos para actualizar inventario');
+    }
+
+    const updatedProduct = await api.updateProduct(productId, { stock }, user.id);
+    await refreshProducts();
+    return updatedProduct;
+  }, [refreshProducts, user]);
+
   const addToCart = useCallback((product: Product, quantity: number) => {
     setCartItems(prev => {
       const existingItem = prev.find(item => item.productId === product.id);
@@ -164,6 +188,20 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
 
   const removeFromCart = useCallback((productId: number) => {
     setCartItems(prev => prev.filter(item => item.productId !== productId));
+  }, []);
+
+  const updateCartQuantity = useCallback((productId: number, quantity: number) => {
+    setCartItems(prev => {
+      if (quantity <= 0) {
+        return prev.filter(item => item.productId !== productId);
+      }
+
+      return prev.map(item =>
+        item.productId === productId
+          ? { ...item, quantity }
+          : item
+      );
+    });
   }, []);
 
   const placeOrder = useCallback(async () => {
@@ -193,7 +231,10 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
       login,
       logout,
       register,
+      createProduct,
+      updateProductStock,
       addToCart,
+      updateCartQuantity,
       removeFromCart,
       placeOrder,
       setSearch: setSearchState,
@@ -201,7 +242,7 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
       refreshProducts,
       refreshCategories,
     }),
-    [user, products, categories, cartItems, search, categoryId, loading, login, logout, register, addToCart, removeFromCart, placeOrder, refreshProducts, refreshCategories]
+    [user, products, categories, cartItems, search, categoryId, loading, login, logout, register, createProduct, updateProductStock, addToCart, updateCartQuantity, removeFromCart, placeOrder, refreshProducts, refreshCategories]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

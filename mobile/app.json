@@ -3,6 +3,18 @@
     "name": "TechStore Mobile",
     "slug": "techstore-mobile",
     "version": "1.0.0",
-    "platforms": ["ios", "android", "web"]
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "android": {
+      "package": "com.vanesavasquez.techstoremobile"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "34dd2308-4512-4b6d-9eb5-b37684545feb"
+      }
+    }
   }
 }

@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "35b82796-8add-4e1a-84ca-b85f604e0758"
+      }
+    },
+    "android": {
+      "package": "com.vanesavasquez.techstore"
+    }
+  }
+}

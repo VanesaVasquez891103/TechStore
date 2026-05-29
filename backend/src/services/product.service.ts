@@ -31,6 +31,13 @@ export class ProductService {
     }
 
     create(dto: CreateProductDto): IProduct {
+        if (dto.price <= 0) {
+            throw new Error('El precio debe ser mayor que cero');
+        }
+        if (!Number.isInteger(dto.stock) || dto.stock < 0) {
+            throw new Error('El stock debe ser un numero entero positivo.');
+        }
+
         const existing = getExistingProductStmt.get(dto.name, dto.categoryId) as IProduct | undefined;
         if (existing) {
             return existing;
@@ -53,6 +60,13 @@ export class ProductService {
         if (!existing) {
             return null;
         }
+        if (dto.price !== undefined && dto.price <= 0) {
+            throw new Error('El precio debe ser mayor que cero');
+        }
+        if (dto.stock !== undefined && (!Number.isInteger(dto.stock) || dto.stock < 0)) {
+            throw new Error('El stock debe ser un numero entero positivo.');
+        }
+
         const updatedProduct = {
             id: dto.id,
             name: dto.name ?? existing.name,

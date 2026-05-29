@@ -14,7 +14,7 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use(loggerMiddleware);
-app.use('/assets', express.static(path.join(process.cwd(), 'assets')));
+app.use('/assets', express.static(path.resolve(__dirname, '..', '..', 'assets')));
 
 app.use('/api/categories', routes.categoryRoutes);
 app.use('/api/products', routes.productRoutes);
@@ -25,15 +25,15 @@ app.use('/api/users', routes.userRoutes);
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Optica API - catalogo mock en JSON', docs: '/api/docs' });
+  res.json({ message: 'Optica Clara API - catalogo de gafas, lentes y accesorios', docs: '/api/docs' });
 });
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
 
 app.listen(port, () => {
-  console.log(`TechStore API escuchando en http://localhost:${port}`);
-  console.log(`Documentación Swagger disponible en http://localhost:${port}/api/docs`);
+  console.log(`Optica Clara API escuchando en http://localhost:${port}`);
+  console.log(`Documentacion Swagger disponible en http://localhost:${port}/api/docs`);
 });
 
 export default app;

@@ -27,14 +27,25 @@ export class ProductController {
 
     create(req: Request, res: Response): Response {
         const dto: CreateProductDto = req.body;
-        const product = this.service.create(dto);
-        return res.status(201).json(product);
+        try {
+            const product = this.service.create(dto);
+            return res.status(201).json(product);
+        } catch (error) {
+            const message = error instanceof Error ? error.message : 'No se pudo crear el producto';
+            return res.status(400).json({ message });
+        }
     }
 
     update(req: Request, res: Response): Response {
         const id = Number(req.params.id);
         const dto: UpdateProductDto = { id, ...req.body };
-        const product = this.service.update(dto);
+        let product;
+        try {
+            product = this.service.update(dto);
+        } catch (error) {
+            const message = error instanceof Error ? error.message : 'No se pudo actualizar el producto';
+            return res.status(400).json({ message });
+        }
         if (!product) {
             return res.status(404).json({ message: 'Producto no encontrado' });
         }

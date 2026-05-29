@@ -26,8 +26,13 @@ export class OrderController {
 
     create(req: Request, res: Response): Response {
         const dto: CreateOrderDto = req.body;
-        const order = this.service.create(dto);
-        return res.status(201).json(order);
+        try {
+            const order = this.service.create(dto);
+            return res.status(201).json(order);
+        } catch (error) {
+            const message = error instanceof Error ? error.message : 'No se pudo crear la orden';
+            return res.status(400).json({ message });
+        }
     }
 
     update(req: Request, res: Response): Response {

@@ -4,9 +4,9 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'TechStore API',
+      title: 'Optica Clara API',
       version: '1.0.0',
-      description: 'API para gestión de tienda tecnológica con mock data en JSON',
+      description: 'API para gestion de una tienda optica con catalogo de gafas, lentes y accesorios.',
     },
     servers: [
       {
@@ -15,7 +15,7 @@ const options = {
       },
     ],
   },
-  apis: ['./src/**/*.ts'], // Archivos donde están los comentarios @swagger
+  apis: ['./src/**/*.ts'], // Archivos donde estan los comentarios @swagger
 };
 
 const specs = swaggerJSDoc(options);

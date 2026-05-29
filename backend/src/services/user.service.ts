@@ -1,4 +1,5 @@
-import { createHash } from 'crypto';
+import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 import { db } from '../database/database';
 import { IUser } from '../interfaces/user.interfaces';
 import { CreateUserDto, LoginDto } from '../dtos/user.dto';
@@ -7,10 +8,17 @@ const getAllUsersStmt = db.prepare('SELECT id, name, lastName, email, phone, add
 const getUserByIdStmt = db.prepare('SELECT id, name, lastName, email, phone, address, role FROM users WHERE id = ?');
 const getUserByEmailStmt = db.prepare('SELECT id, name, lastName, email, password, phone, address, role FROM users WHERE LOWER(email) = LOWER(?)');
 const insertUserStmt = db.prepare('INSERT INTO users (name, lastName, email, password, phone, address, role) VALUES (?, ?, ?, ?, ?, ?, ?)');
+const updateUserPasswordStmt = db.prepare('UPDATE users SET password = ? WHERE id = ?');
 
 export class UserService {
     private hashPassword(password: string): string {
-        return createHash('sha256').update(password).digest('hex');
+    const salt = bcrypt.genSaltSync(10);
+    return bcrypt.hashSync(password, salt);
+}
+
+    private isLegacySha256Password(password: string, hash: string): boolean {
+        const sha256Hash = crypto.createHash('sha256').update(password).digest('hex');
+        return sha256Hash === hash;
     }
 
     private sanitize(user: IUser) {
@@ -44,7 +52,7 @@ export class UserService {
             hashedPassword,
             dto.phone ?? null,
             dto.address ?? null,
-            dto.role === 'admin' ? 'admin' : 'customer'
+            'customer'
         );
         return {
             id: Number(result.lastInsertRowid),
@@ -53,16 +61,26 @@ export class UserService {
             email: dto.email.toLowerCase(),
             phone: dto.phone,
             address: dto.address,
-            role: dto.role === 'admin' ? 'admin' : 'customer'
+            role: 'customer'
         };
     }
 
     validateCredentials(dto: LoginDto): Omit<IUser, 'password'> | null {
-        const hashedPassword = this.hashPassword(dto.password);
         const user = getUserByEmailStmt.get(dto.email) as IUser | null;
-        if (!user || user.password !== hashedPassword) {
-            return null;
+        if (!user) return null;
+
+        const isBcryptHash = user.password.startsWith('$2a$') || user.password.startsWith('$2b$');
+        const isValid = isBcryptHash
+            ? bcrypt.compareSync(dto.password, user.password)
+            : this.isLegacySha256Password(dto.password, user.password);
+
+        if (!isValid) return null;
+
+        if (!isBcryptHash) {
+            updateUserPasswordStmt.run(this.hashPassword(dto.password), user.id);
         }
+
         return this.sanitize(user);
+
     }
 }
